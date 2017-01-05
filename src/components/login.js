@@ -54,18 +54,15 @@ const login = ({
                     ]
                 })(<Input size="large" type="password" placeholder="密码" />)}
             </FormItem>
+            {
+                users.message!=null?<Row>{users.message}</Row>:""
+            }
+        
             <Row>
-                <Button type="primary" size="large" onClick={handleOk} >
+                <Button type="primary" size="large" onClick={handleOk} loading={users.loginButtonLoading} >
                     登录
           </Button>
             </Row>
-        {
-  !users.login?
-            <p>登录失败</p>
-            :
-            <p>登录成功</p>    
-        }    
-      
         </form>
     )
 }

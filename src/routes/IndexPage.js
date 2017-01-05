@@ -14,7 +14,8 @@ import Login from '../components/login';
 
 
 
-function IndexPage({loaction,dispatch,users}) {
+function IndexPage({children,loaction,dispatch,users}) {
+  console.log(111);
   console.log(users);
   const loginProps={
       users,
@@ -24,12 +25,20 @@ function IndexPage({loaction,dispatch,users}) {
   };
   return (
     <div>
-        <Login {...loginProps}/>
+    {
+      users.login?
+           <div>
+              {children}
+           </div>
+      :    <Login {...loginProps}/>
+    }
+    
     </div>
   );
 }
 
 IndexPage.propTypes = {
+  children:PropTypes.object.isRequired,
   loaction:PropTypes.object,
   dispatch:PropTypes.func,
   users:PropTypes.object

@@ -4,37 +4,50 @@ import {parse} from 'qs';
 export default{
     namespace:'users',
     state:{
-        token:localStorage.getItem("token"),
+        message:null,
+        loginButtonLoading:false,
         login:false,
         userInfo:{
             name:null
         }
     },
     reducers:{
-        loginSuccess(state,data){
-            localStorage.setItem("token",data.token);
+        loginSuccess(state,{result:data}){
+            localStorage.setItem("token",data.result);
             return{
                 ...state,
-                login:true
+                login:true,
+                loginButtonLoading:false,
+                message:"登录成功"
             };
         },
-         loginFail(state,data){
+         loginFail(state,{result:data}){
+           
             return{
                 ...state,
-                login:false
+                login:false,
+                loginButtonLoading:false,
+                message:data.error.message
             };
-        }
+        },
+        showLoginButtonLoading(state){
+            return{  ...state,
+                loginButtonLoading:true
+            };
+            
+        },
     },
     effects:{
         *login({userLoginInfo},{call,put}){
-            console.log("1111");
+            yield put({type:'showLoginButtonLoading'});
             const data=yield call(login,parse(userLoginInfo));
-            console.log(data);
+
+            console.log(data.data);
             if(data.data.success){
-                yield put({type:'loginSuccess',data:data.data});
+                yield put({type:'loginSuccess',result:data.data});
             }
             else{
-              yield put({type:'loginFail',data:data.data})
+              yield put({type:'loginFail',result:data.data})
             }
         }
     }
