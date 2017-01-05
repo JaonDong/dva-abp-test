@@ -12,12 +12,14 @@ import {
 const FormItem = Form.Item;
 
 const login = ({
+    users,
     onOk,
     form: {
         getFieldDecorator,
         validateFieldsAndScroll
     }
 }) => {
+    console.log(users);
     function handleOk() {
         validateFieldsAndScroll((errors, values) => {
             if (errors) {
@@ -57,10 +59,18 @@ const login = ({
                     登录
           </Button>
             </Row>
+        {
+  !users.login?
+            <p>登录失败</p>
+            :
+            <p>登录成功</p>    
+        }    
+      
         </form>
     )
 }
 login.propTypes = {
+    users:PropTypes.object,
     onOk: PropTypes.func,
     form: PropTypes.object
 }

@@ -5,6 +5,7 @@ export default{
     namespace:'users',
     state:{
         token:localStorage.getItem("token"),
+        login:false,
         userInfo:{
             name:null
         }
@@ -13,13 +14,14 @@ export default{
         loginSuccess(state,data){
             localStorage.setItem("token",data.token);
             return{
-                ...state
+                ...state,
+                login:true
             };
         },
          loginFail(state,data){
             return{
                 ...state,
-                ...data
+                login:false
             };
         }
     },
@@ -28,11 +30,11 @@ export default{
             console.log("1111");
             const data=yield call(login,parse(userLoginInfo));
             console.log(data);
-            if(data.success){
-                yield put({type:'loginSuccess',data:data});
+            if(data.data.success){
+                yield put({type:'loginSuccess',data:data.data});
             }
             else{
-            yield put({type:'loginFail',data:data})
+              yield put({type:'loginFail',data:data.data})
             }
         }
     }

@@ -4,7 +4,13 @@
   "less": false,
   "publicPath": "/",
   "autoprefixer": null,
-  "proxy": null,
+  "proxy": {
+  "/api": {
+    "target": "http://localhost:6240/api/",
+    "changeOrigin": true,
+    "pathRewrite": { "^/api" : "" }
+  }
+},
   "extraBabelPlugins": [
     "transform-runtime",
     ["import", { "libraryName": "antd", "style": "css" }]
