@@ -15,8 +15,7 @@ import Login from '../components/login';
 
 
 function IndexPage({children,loaction,dispatch,users}) {
-  console.log(111);
-  console.log(users);
+
   const loginProps={
       users,
       onOk(data) {

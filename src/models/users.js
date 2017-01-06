@@ -27,7 +27,7 @@ export default{
                 ...state,
                 login:false,
                 loginButtonLoading:false,
-                message:data.error.message
+                message:null
             };
         },
         showLoginButtonLoading(state){
@@ -36,6 +36,13 @@ export default{
             };
             
         },
+        showLoginErrorMsg(state,{result:data}){
+            console.log("showLoginErrorMsg");
+            return{
+                ...state,
+                 message:data.error.message
+            }
+        }
     },
     effects:{
         *login({userLoginInfo},{call,put}){
@@ -47,6 +54,7 @@ export default{
                 yield put({type:'loginSuccess',result:data.data});
             }
             else{
+              yield put({type:'showLoginErrorMsg',result:data.data})  
               yield put({type:'loginFail',result:data.data})
             }
         }
