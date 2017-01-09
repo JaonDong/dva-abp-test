@@ -3,7 +3,8 @@ import config from '../utils/config';
 import qs from 'qs';
 
 export async function login(params) {
-    return request('/api/account/Authenticate', {
+    //api/services/app
+    return request('http://localhost:6240/api/account/Authenticate', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
@@ -14,7 +15,7 @@ export async function login(params) {
 
 export async function getUserInfo(){
     console.log("getUserInfo")
-    return request('/api/services/app/userlogin/GetRecentUserLoginAttempts',{
+    return request('/api/userlogin/GetRecentUserLoginAttempts',{
         method:'post',
         headers: {
             'Content-Type': 'application/json',
