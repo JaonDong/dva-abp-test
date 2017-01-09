@@ -1,12 +1,13 @@
 import { login,getUserInfo } from '../services/users';
 import { parse } from 'qs';
+import { routerRedux } from 'dva/router';
 
 export default {
     namespace: 'users',
     state: {
         message: null,
         loginButtonLoading: false,
-        login: false,
+        login: localStorage.getItem("token")!="",
         userInfo: {
             name: null
         }
@@ -21,16 +22,16 @@ export default {
             localStorage.setItem("token", data.result);
             return {
                 ...state,
-                login: true,
+                login: localStorage.getItem("token")!="",
                 loginButtonLoading: false,
                 message: "登录成功"
             };
         },
-        loginFail(state, {result: data}) {
-
+        loginFail(state) {
+            localStorage.setItem("token","");
             return {
                 ...state,
-                login: false,
+                   login: localStorage.getItem("token")!="",
                 loginButtonLoading: false,
                 message: null
             };
@@ -61,14 +62,15 @@ export default {
             }
             else {
                 yield put({ type: 'showLoginErrorMsg', result: data.data })
-                yield put({ type: 'loginFail', result: data.data })
+                yield put({ type: 'loginFail'})
             }
         },
         *getUserInfo({},{call,put}){
             const data=yield call(getUserInfo);
-            console.debug(data);
+         
             if(data.data.unAuthorizedRequest){
-                throw new Error("unAuthorizedRequest");
+                //验证失败，登录超时或未登录
+                yield put({type:'loginFail'})
             }
         }
     }

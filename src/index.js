@@ -9,6 +9,7 @@ const app = dva({
     onError(e){
         if(e.message=="unAuthorizedRequest"){
            console.log(routerRedux);
+           routerRedux.push("/");
         }
     }
 });
