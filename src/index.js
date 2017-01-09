@@ -1,9 +1,15 @@
 import dva from 'dva';
 import './index.html';
 import './index.css';
+import { routerRedux } from 'dva/router';
 
 // 1. Initialize
-const app = dva();
+const app = dva({
+    /*未授权，重定向到登录页 */
+    // UnAuthorizedRequest(e) {
+    //     routerRedux.push("/");
+    // }
+});
 
 // 2. Plugins
 // app.use({});
