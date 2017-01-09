@@ -67,6 +67,9 @@ export default {
         *getUserInfo({},{call,put}){
             const data=yield call(getUserInfo);
             console.debug(data);
+            if(data.data.unAuthorizedRequest){
+                throw new Error("unAuthorizedRequest");
+            }
         }
     }
 }

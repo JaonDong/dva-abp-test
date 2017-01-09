@@ -6,9 +6,11 @@ import { routerRedux } from 'dva/router';
 // 1. Initialize
 const app = dva({
     /*未授权，重定向到登录页 */
-    // UnAuthorizedRequest(e) {
-    //     routerRedux.push("/");
-    // }
+    onError(e){
+        if(e.message=="unAuthorizedRequest"){
+           console.log(routerRedux);
+        }
+    }
 });
 
 // 2. Plugins
