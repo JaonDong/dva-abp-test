@@ -15,6 +15,17 @@ function checkStatus(response) {
   throw error;
 }
 
+function parseErrorMessage({ data }) {
+  const { success, unAuthorizedRequest,error } = data.data;
+  if (!success) {
+    throw new Error(error.message);
+  }
+  if(unAuthorizedRequest){
+    throw new Error("unAuthorizedRequest");
+  }
+  return { data };
+}
+
 /**
  * Requests a URL, returning a promise.
  *
@@ -26,6 +37,6 @@ export default function request(url, options) {
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON)
-    .then(data => ({ data }))
+    .then(data => (parseErrorMessage({data})))
     .catch(err => ({ err }));
 }

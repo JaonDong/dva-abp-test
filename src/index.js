@@ -8,8 +8,10 @@ const app = dva({
     /*未授权，重定向到登录页 */
     onError(e){
         if(e.message=="unAuthorizedRequest"){
-           console.log(routerRedux);
-           routerRedux.push("/");
+           console.warn("未登录状态");
+        }
+        else{
+            console.error(e.message)
         }
     }
 });
