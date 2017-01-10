@@ -11,7 +11,7 @@ const app = dva({
            console.warn("未登录状态");
         }
         else{
-            console.error(e.message)
+            //console.error(e.message)
         }
     }
 });
